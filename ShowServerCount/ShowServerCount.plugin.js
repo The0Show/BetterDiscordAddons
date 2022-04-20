@@ -6,7 +6,7 @@
  * @authorLink https://the0show.com
  * @donate https://the0show.com/donate
  * @website https://the0show.com/projects/bdPlugins/suslinks
- * @updateUrl https://raw.githubusercontent.com/The0Show/BetterDiscordPlugins/release/dist/ShowServerCount/ShowServerCount.plugin.js
+ * @updateUrl https://raw.githubusercontent.com/The0Show/BetterDiscordAddons/main/ShowServerCount/ShowServerCount.plugin.js
  */
 
 /*@cc_on
