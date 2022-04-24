@@ -1,6 +1,6 @@
 /**
  * @name Interrupted
- * @version 1.0.0
+ * @version 1.1.0
  * @description Plays the Discord ping sound (or any sound of your choosing) randomly. This is inspired by MemeSounds by Lonk#6942, check it out!
  * @invite ZSn3cHP
  * @author The0Show#8908
@@ -163,7 +163,7 @@ module.exports = (() => {
                                   );
                                   audio.play();
                                   this.timeoutFunction();
-                              }, this.getRandomInt((this.settings.setting.timeout ? this.settings.setting.timeout : 7200) * 1000));
+                              }, this.getRandomInt((this.settings.setting.timeout ? parseInt(this.settings.setting.timeout) : 7200) * 1000));
                           }
 
                           getRandomInt(max) {
@@ -174,7 +174,9 @@ module.exports = (() => {
                            * Runs when the plugin is activated, including reloads.
                            */
                           start() {
-                              this.prevTimeout = this.settings.setting.timeout;
+                              this.prevTimeout = parseInt(
+                                  this.settings.setting.timeout
+                              );
                               this.timeoutFunction();
                           }
 
@@ -191,11 +193,41 @@ module.exports = (() => {
                            */
                           observer() {
                               if (
-                                  this.settings.setting.timeout !=
+                                  parseInt(this.settings.setting.timeout) !=
                                   this.prevTimeout
                               ) {
                                   if (this.timeout) clearTimeout(this.timeout);
+
+                                  const mistakeMessages = [
+                                      "You're making a terrible mistake...",
+                                      "You're going to regret this...",
+                                      "The0Show is not responsible for any damage done to your speakers or your ears caused directly or indirectly by this plugin.",
+                                      "This will hurt. A lot.",
+                                      "Headphone warning!",
+                                      "Have fun!",
+                                      "I'm going to enjoy this.",
+                                      "I don't think you want to do this...",
+                                  ];
+
+                                  if (
+                                      parseInt(this.settings.setting.timeout) <=
+                                          0 &&
+                                      this.settings.setting.timeout != ""
+                                  )
+                                      BdApi.showToast(
+                                          mistakeMessages[
+                                              this.getRandomInt(
+                                                  mistakeMessages.length
+                                              )
+                                          ],
+                                          { type: "warning", icon: true }
+                                      );
+
                                   this.timeoutFunction();
+
+                                  this.prevTimeout = parseInt(
+                                      this.settings.setting.timeout
+                                  );
                               }
                           }
                       };
